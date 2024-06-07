@@ -7,4 +7,5 @@ def index(request):
       print("Received data" + request.POST['textmessage'])
       myChat = Chat.objects.get(id=2)
       Message.objects.create(text = request.POST['textmessage'], chat=myChat, author=request.user, receiver=request.user)
-    return render(request, 'chat/index.html', {'username':'Jad'})
+    chatMessages = Message.objects.filter(chat__id=2)
+    return render(request, 'chat/index.html', {'messages':chatMessages})
