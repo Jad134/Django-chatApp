@@ -30,21 +30,25 @@
                        <i class="color-gray">${messagefield.value}</i>
                  </div>`;
 
-            await fetch('/chat/', {
+            let response = await fetch('/chat/', {
                 method: 'POST',
                 body: fd,
             })
+            let messageJson = await response.json();
+            let jsonObj = messageJson;
+            let message = jsonObj.fields.text
+            let objTime = jsonObj.fields.created_at
+            let objAuthor = jsonObj.fields.author
+            console.log(message);
             console.log('success')
 
             document.getElementById('deleteMessage').remove();
-            for ( message in messages){
-                messageContainer.innerHTML += `
+
+            messageContainer.innerHTML += `
                  <div>
-                      <span class="color-gray">[{{message.created_at}}]</span> <b>{{request.user}}:</b>
-                       <i >${messagefield.value}</i>
+                      <span class="color-gray">[${objTime}]</span> <b>${objAuthor}:</b>
+                       <i >${message}</i>
                  </div>`;
-            }
-               
         }
         catch (e) {
             console.error('An error occurded', e)
