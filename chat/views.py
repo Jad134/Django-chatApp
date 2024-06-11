@@ -2,8 +2,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Message, Chat
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 # Create your views here.
+@login_required(login_url='/login/')
 def index(request):
     if request.method =='POST':
       print("Received data" + request.POST['textmessage'])
@@ -21,3 +24,15 @@ def login_view(request):
       else:
           return render(request, 'auth/login.html',{'wrongPassword': True})
     return render(request, 'auth/login.html')
+
+def register_view(request):
+  if request.method =='POST':
+    confirmPassword = request.POST.get('controllPassword')
+    password = request.POST.get('createPassword')
+    if password == confirmPassword:
+     user = User.objects.create_user( username= request.POST.get('createUsername'),
+     email= request.POST.get('createMail'),
+     password= password)
+    else:
+     return render(request, 'register/register.html', {'notSimilarPassword': True})
+  return render(request, 'register/register.html')

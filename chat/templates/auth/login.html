@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
 <h1>Login</h1>
 
 {% if wrongPassword %}
@@ -8,6 +10,9 @@
     {% csrf_token %}
     <div><input type="text" name="username"></div>
     <div><input type="password" name="password" id=""></div>
-    <div><button>Login</button></div>
+    <div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Login
+        </button></div>
 
 </form>
+{% endblock%}
