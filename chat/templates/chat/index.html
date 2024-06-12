@@ -10,52 +10,8 @@
     </div>
     {%endfor%}
 </div>
-
-<script>
-    async function sendMessage() {
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        const d = new Date();
-        let day = d.getDate();
-        let year = d.getFullYear();
-        let month = months[d.getMonth()];
-        let date = `${month} ${day} , ${year}`
-        let fd = new FormData()
-        let token = '{{ csrf_token }}'
-        fd.append('textmessage', messagefield.value)
-        fd.append('csrfmiddlewaretoken', token)
-        try {
-            messageContainer.innerHTML += `
-                 <div id="deleteMessage">
-                      <span class="color-gray">[${date}]</span> <b>{{request.user}}:</b>
-                       <i class="color-gray">${messagefield.value}</i>
-                 </div>`;
-
-            let response = await fetch('/chat/', {
-                method: 'POST',
-                body: fd,
-            })
-            let messageJson = await response.json();
-            let jsonObj = messageJson;
-            let message = jsonObj.fields.text
-            let objTime = jsonObj.fields.created_at
-            let objAuthor = jsonObj.fields.author
-            console.log(message);
-            console.log('success')
-
-            document.getElementById('deleteMessage').remove();
-
-            messageContainer.innerHTML += `
-                 <div>
-                      <span class="color-gray">[${objTime}]</span> <b>${objAuthor}:</b>
-                       <i >${message}</i>
-                 </div>`;
-        }
-        catch (e) {
-            console.error('An error occurded', e)
-        }
-
-    }
-</script>
+{%load static %}
+<script type="text/javascript"  src="{% static 'js/chat.js' %}"></script>
 
 
 <form onsubmit="sendMessage(); return false;" method="post">
@@ -63,6 +19,7 @@
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" name="textmessage" type="text" id="messagefield">
         <label class="mdl-textfield__label" for="messagefield">Text...</label>
+        <input type="hidden" id="username" value="{{ request.user.username }}">
     </div>
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Send
