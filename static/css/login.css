@@ -1,0 +1,37 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    display: contents;
+}
+
+.register-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.mdl-textfield__input {
+    cursor: pointer;
+}
+
+#notSimilarPassword {
+    display: none;
+    color: red;
+}
+
+#usernameExists {
+    display: none;
+    color: red;
+}

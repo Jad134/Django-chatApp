@@ -1,17 +1,39 @@
-<h1>Registrierung</h1>
+{% extends "base.html" %}
+{% block content %}
+{%load static %}
+<link rel="stylesheet" href="{% static 'css/login.css'%}">
+<script type="text/javascript"  src="{% static 'js/register.js' %}"></script>
+<section class="content">
+    <h1>Registrierung</h1>
+   
+    <p id="notSimilarPassword"> passwords don't match</p>
+    <p id="usernameExists" >Username already exists</p>
 
-{% if notSimilarPassword %}
-<p> Password ist falsch</p>
-{% endif %}
+    <form id="registerForm" onsubmit="registerUser(); return false;" method="post">
+        {% csrf_token %}
+        <div class="input-container">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input  class="mdl-textfield__input" type="text" id="newUsername" name="createUsername">
+                <label class="mdl-textfield__label" for="newUsername">Username</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input   type="email" class="mdl-textfield__input" id="createMail" name="createMail" id="">
+                <label class="mdl-textfield__label" for="createMail">Email</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input  class="mdl-textfield__input" id="passwordOne" type="password" name="createPassword" id="">
+                <label class="mdl-textfield__label" for="passwordOne">Password</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input  class="mdl-textfield__input" id="passwordTwo" type="password" name="controllPassword" id="">
+                <label class="mdl-textfield__label" for="passwordTwo">Password</label>
+            </div>
+        </div>
+        <div><button disabled  id="submitBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                Login
+            </button></div>
 
-<form action="/register/" method="POST">
-    {% csrf_token %}
-    <div><input placeholder="username" type="text" name="createUsername"></div>
-    <div><input placeholder="email" type="email" name="createMail" id=""></div>
-    <div><input placeholder="pw" type="password" name="createPassword" id=""></div>
-    <div><input placeholder="pw2" type="password" name="controllPassword" id=""></div>
-    <div><button >
-            Login
-        </button></div>
+    </form>
+</section>
 
-</form>
+{% endblock%}

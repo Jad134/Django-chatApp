@@ -1,18 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Login</h1>
+{%load static %}
+<link rel="stylesheet" href="{% static 'css/login.css'%}">
 
-{% if wrongPassword %}
-<p>Benutzername oder Password ist falsch</p>
-{% endif %}
+<section class="content">
+    <h1>Login</h1>
 
-<form action="/login/" method="POST">
-    {% csrf_token %}
-    <div><input type="text" name="username"></div>
-    <div><input type="password" name="password" id=""></div>
-    <div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-            Login
-        </button></div>
+    {% if wrongPassword %}
+    <p class="color-red">Benutzername oder Password ist falsch</p>
+    {% endif %}
 
-</form>
+    <form class="form" action="/login/" method="POST">
+        {% csrf_token %}
+        <div class="input-container">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input name="username" class="mdl-textfield__input" type="text" id="sample3">
+                <label class="mdl-textfield__label" for="sample3">Username</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input name="password" class="mdl-textfield__input" type="password" id="sample3">
+                <label class="mdl-textfield__label" for="sample3">Password</label>
+            </div>
+        </div>
+       
+        <div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                Login
+            </button></div>
+    </form>
+
+    <div class="register-div">
+        <span>
+            Neu hier?
+        </span> <a href="/register">Konto erstellen.</a>
+    </div>
+</section>
+
 {% endblock%}

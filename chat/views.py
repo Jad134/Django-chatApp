@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from .models import Message, Chat
@@ -35,14 +36,18 @@ def login_view(request):
 
 def register_view(request):
   if request.method =='POST':
-    confirmPassword = request.POST.get('controllPassword')
-    password = request.POST.get('createPassword')
-    if password == confirmPassword:
+    password = request.POST.get('createPassword') 
+    try:
      user = User.objects.create_user( username= request.POST.get('createUsername'),
      email= request.POST.get('createMail'),
      password= password)
-    else:
-     return render(request, 'register/register.html', {'notSimilarPassword': True})
+     return JsonResponse({'success': True, 'redirect_url': '/login/'})
+    except IntegrityError as e:
+            if 'UNIQUE constraint' in str(e):
+                return JsonResponse({'success': False, 'error': 'username_exists'})
+            return JsonResponse({'success': False, 'error': 'unknown_error'})
+    except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
   return render(request, 'register/register.html')
 
 def logout_view(request):
