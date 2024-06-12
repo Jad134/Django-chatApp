@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from .models import Message, Chat
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core import serializers
@@ -44,3 +44,7 @@ def register_view(request):
     else:
      return render(request, 'register/register.html', {'notSimilarPassword': True})
   return render(request, 'register/register.html')
+
+def logout_view(request):
+ logout(request)
+ return HttpResponseRedirect('/login') 
