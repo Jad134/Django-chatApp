@@ -1,35 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
-
-{% if request.user.is_authenticated%}
-<div id="messageContainer">
-    {%for message in messages %}
-    <div>
-        <span class="color-gray">[{{message.created_at}}]</span> <b>{{message.author}}:</b>
-        <i>{{message.text}}</i>
-    </div>
-    {%endfor%}
-</div>
 {%load static %}
-<script type="text/javascript"  src="{% static 'js/chat.js' %}"></script>
+{% if request.user.is_authenticated%}
+<link rel="stylesheet" href="{% static 'css/index.css'%}">
 
+<body onload="init()">
+    <section  class="content">
+        <div id="messageContainer">
+            {%for message in messages %}
+            {% if message.author.username == user.username %}
+            <div class="own-message">
+            {% else %}
+            <div class="partner-message">
+            {% endif %}
+                <span class="color-gray">{{message.created_at}}</span> <b>{{message.author}}:</b>
+                <div class="message-container">
+                    <i>{{message.text}}</i>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        {%load static %}
+        <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
+    
+    
+        <form class="message-form" onsubmit="sendMessage(); return false;" method="post">
+            {% csrf_token %}
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label message-input-container">
+                <input class="mdl-textfield__input" name="textmessage" type="text" id="messagefield">
+                <label class="mdl-textfield__label" for="messagefield">Text...</label>
+                <input type="hidden" id="username" value="{{ request.user.username }}">
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                Send
+            </button>
+        </form>
+        {% else %}
+        <h1>Nicht eingeloggt</h1>
+        <p>
+            Bitte logge dich ein
+            <br>Bitte klicke <a href="/login/">hier</a>
+        </p>
+    </section>
+</body>
 
-<form onsubmit="sendMessage(); return false;" method="post">
-    {% csrf_token %}
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" name="textmessage" type="text" id="messagefield">
-        <label class="mdl-textfield__label" for="messagefield">Text...</label>
-        <input type="hidden" id="username" value="{{ request.user.username }}">
-    </div>
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-        Send
-    </button>
-</form>
-{% else %}
-<h1>Nicht eingeloggt</h1>
-<p>
-    Bitte logge dich ein
-    <br>Bitte klicke <a href="/login/">hier</a>
-</p>
 {% endif %}
 {% endblock %}

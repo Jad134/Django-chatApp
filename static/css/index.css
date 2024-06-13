@@ -1,0 +1,46 @@
+.content{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1920px
+}
+
+#messageContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.message-form{
+    width: 100%;
+}
+
+.message-input-container{
+    width: 90%;
+}
+
+.own-message{
+    background-color: #dcf5dc;
+    padding: 10px 8px 10px 8px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    align-items: end;
+}
+
+.partner-message{
+    background-color: #fff4e1;
+    padding: 10px 8px 10px 8px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.message-container{
+    display: flex;
+    overflow-wrap: anywhere;
+}

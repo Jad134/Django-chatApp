@@ -22,7 +22,7 @@ def index(request):
       message_data['fields']['created_at'] = new_message.created_at.strftime('%B %d, %Y')
       return JsonResponse(message_data, safe=False)
     chatMessages = Message.objects.filter(chat__id=2)
-    return render(request, 'chat/index.html', {'messages':chatMessages})
+    return render(request, 'chat/index.html', {'messages':chatMessages, 'user': request.user,})
 
 def login_view(request):
     if request.method =='POST':

@@ -1,3 +1,8 @@
+function init() {
+    console.log('toll');
+
+}
+
 async function sendMessage() {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const d = new Date();
@@ -11,7 +16,7 @@ async function sendMessage() {
     fd.append('textmessage', document.getElementById('messagefield').value);
     fd.append('csrfmiddlewaretoken', token);
     try {
-        messageContainer.innerHTML += `
+        messageContainer.innerHTML +=/*html*/`
              <div id="deleteMessage">
                   <span class="color-gray">[${date}]</span> <b>${username}:</b>
                    <i id="failedMessage" class="color-gray">${messagefield.value}</i>
@@ -28,17 +33,24 @@ async function sendMessage() {
         let objAuthor = jsonObj.fields.author
         console.log(message);
         console.log('success')
-            document.getElementById('deleteMessage').remove();
-            messageContainer.innerHTML += `
-                 <div>
-                      <span class="color-gray">[${objTime}]</span> <b>${objAuthor}:</b>
-                       <i >${message}</i>
-                 </div>`;    
+        document.getElementById('deleteMessage').remove();
+        messageContainer.innerHTML += /*html*/`
+                <div class="own-message">
+                  <div>
+                    <span class="color-gray">${objTime}</span> 
+                     <div>
+                      <b>${objAuthor}:</b>
+                     </div>
+                     <div class="message-container">
+                     <i>${message}</i>
+                    </div>
+                  </div>
+                </div>`;
     }
     catch (e) {
         console.error('An error occurded', e)
         let errorMessage = document.getElementById('failedMessage');
-        if (errorMessage){
+        if (errorMessage) {
             errorMessage.classList.remove('color-gray');
             errorMessage.classList.add('color-red');
         }
