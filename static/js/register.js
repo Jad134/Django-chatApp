@@ -59,3 +59,7 @@ async function registerUser() {
         notSimilarPassword.style.display = 'block';
     }
 }
+
+function routeBack(){
+    window.location.href = '/login/';
+}
