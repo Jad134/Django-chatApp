@@ -24,25 +24,26 @@
         <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
     
     
-        <form class="message-form" onsubmit="sendMessage(); return false;" method="post">
-            {% csrf_token %}
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label message-input-container">
-                <input class="mdl-textfield__input" name="textmessage" type="text" id="messagefield">
-                <label class="mdl-textfield__label" for="messagefield">Text...</label>
-                <input type="hidden" id="username" value="{{ request.user.username }}">
-            </div>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                Send
-            </button>
-        </form>
-        {% else %}
-        <h1>Nicht eingeloggt</h1>
-        <p>
-            Bitte logge dich ein
-            <br>Bitte klicke <a href="/login/">hier</a>
-        </p>
+    
+     
     </section>
+    <form class="message-form" onsubmit="sendMessage(); return false;" method="post">
+        {% csrf_token %}
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label message-input-container">
+            <input class="mdl-textfield__input" name="textmessage" type="text" id="messagefield">
+            <label class="mdl-textfield__label" for="messagefield">Text...</label>
+            <input type="hidden" id="username" value="{{ request.user.username }}">
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Send
+        </button>
+    </form>
 </body>
-
+{% else %}
+<h1>Nicht eingeloggt</h1>
+<p>
+    Bitte logge dich ein
+    <br>Bitte klicke <a href="/login/">hier</a>
+</p>
 {% endif %}
 {% endblock %}
