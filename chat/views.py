@@ -11,6 +11,14 @@ import json
 # Create your views here.
 @login_required(login_url='/login/')
 def index(request):
+    
+    """
+    This is a view to render the chat messages.
+
+    Handles the rendering of the chat interface and processes
+    incoming chat messages.
+
+    """
     if request.method =='POST':
       print("Received data" + request.POST['textmessage'])
       myChat = Chat.objects.get(id=2)
@@ -25,6 +33,12 @@ def index(request):
     return render(request, 'chat/index.html', {'messages':chatMessages, 'user': request.user,})
 
 def login_view(request):
+    
+    """
+    This renders the view for the login Screen 
+    and send request do django authenticate function
+    """
+
     if request.method =='POST':
       user = authenticate(username= request.POST.get('username'), password=request.POST.get('password'))
       if user:
@@ -35,6 +49,10 @@ def login_view(request):
     return render(request, 'auth/login.html')
 
 def register_view(request):
+  """
+  Renders the register view and create a new user with django create_user function
+  """
+
   if request.method =='POST':
     password = request.POST.get('createPassword') 
     try:
