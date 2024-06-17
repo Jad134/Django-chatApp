@@ -1,6 +1,6 @@
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Message, Chat
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -64,3 +64,7 @@ def register_view(request):
 def logout_view(request):
  logout(request)
  return HttpResponseRedirect('/login') 
+
+
+def redirect_view(request):
+    return redirect('/login')

@@ -13,20 +13,24 @@ async function sendMessage() {
     let username = document.getElementById('username').value;
     fd.append('textmessage', document.getElementById('messagefield').value);
     fd.append('csrfmiddlewaretoken', token);
-    try {
-        showMessagePreview(date, username)
-        let response = await fetch('/chat/', {
-            method: 'POST',
-            body: fd,
-        })
-        let { message, objTime, objAuthor } = await getResponseDatas(response)
-        document.getElementById('deleteMessage').remove();
-        showMessage(objTime, objAuthor, message)
+    if (document.getElementById('messagefield').value.trim() !== '') {
+
+        try {
+            showMessagePreview(date, username)
+            let response = await fetch('/chat/', {
+                method: 'POST',
+                body: fd,
+            })
+            let { message, objTime, objAuthor } = await getResponseDatas(response)
+            document.getElementById('deleteMessage').remove();
+            showMessage(objTime, objAuthor, message)
+            document.getElementById('empty-message').setAttribute("style","display:none;");
+        }
+        catch (e) {
+            handleFailedMessage(e)
+        }
+        document.getElementById('messagefield').value = '';
     }
-    catch (e) {
-        handleFailedMessage(e)
-    }
-    document.getElementById('messagefield').value = '';
 }
 
 /**
