@@ -26,6 +26,7 @@ async function sendMessage() {
     catch (e) {
         handleFailedMessage(e)
     }
+    document.getElementById('messagefield').value = '';
 }
 
 /**
